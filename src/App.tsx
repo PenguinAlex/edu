@@ -5,14 +5,19 @@ import UpgradeCard from "./components/UpgradeCard";
 import ProductionCard from "./components/ProductionCard";
 import Footer from "./components/Footer";
 import MoneyButton from "./components/MoneyButton";
+import {useProduction} from "./hooks/useProduction";
 
 const App = () => {
     const [money, setMoney] = useState(0)
+    const {money: production} = useProduction({productionRate: 50})
+    const [gain, setGain] = useState(0)
     const handleMoneyClick = () => {
-        setMoney(money + 1);
+        setMoney(money + 1*gain);
     };
-    const handleBuyUpgrade = () => {
-        // обработчик клика на кнопке "Купить"
+    const handleBuyUpgrade = (cost:number) => {
+        if (money>=cost){
+            setMoney(money-cost)
+        }
     };
     return (
         <div>
