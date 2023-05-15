@@ -19,19 +19,21 @@ const BoardComponent:FC<BoardProps> = ({board, setBoard}) => {
         }
     }
 
-    useEffect(() =>{
-        highlightCells()
-    },[selectedCell])
+    function updateBoard(){
+        const newBoard = board.getCopyBoard()
+        setBoard(newBoard)
+    }
 
     function highlightCells(){
         board.highlightCells(selectedCell)
         updateBoard()
     }
 
-    function updateBoard(){
-        const newBoard = board.getCopyBoard()
-        setBoard(newBoard)
-    }
+    useEffect(() =>{
+        highlightCells()
+    },[selectedCell])
+
+
 
     return (
         <div className='w-[512px] h-[512px] flex flex-wrap'>
