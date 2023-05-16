@@ -50,5 +50,5 @@
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2"
   },
-  "homepage": "https://penguinalex.github.io/edu/"
+  "homepage": "."
 }
