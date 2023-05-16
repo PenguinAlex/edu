@@ -11,40 +11,45 @@ interface BoardProps {
     swapPlayer: () => void;
 }
 const BoardComponent:FC<BoardProps> = ({board, setBoard, currentPlayer, swapPlayer}) => {
-    const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
+    const [selectedCell, setSelectedCell] = useState<Cell | null>(null) //выбранная клетка (фигура)
 
-    function click(cell:Cell) {
+    function click(cell:Cell) { // обработчик нажатия на клетку
         if (selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)){
-            selectedCell.moveFigure(cell);
-            swapPlayer();
-
-            setSelectedCell(null);
+            /* если была выбрана клетка(фигура)
+            и клетка по которой клинкули не выбранная клета
+            и выбранная фигура существует
+            и может двигатся на кликнутую клетку*/
+            selectedCell.moveFigure(cell); //двигаем фигуру ВЫБРАННОЙ клетки на КЛИКНУТУЮ клетку
+            swapPlayer(); //Меняем текущего игрока
+            setSelectedCell(null); //удаляем выделение с выделенной клетки
         }else{
             if (cell.figure?.color === currentPlayer?.color){
-                setSelectedCell(cell);
+                /*если кликнули по клетке с фигурой
+                и цвет игрока совпадает с цветов фигуры*/
+                setSelectedCell(cell); //выделяем клетку
             }
         }
     }
 
-    function updateBoard(){
-        const newBoard = board.getCopyBoard()
-        setBoard(newBoard)
+    function updateBoard(){ //обновление доски
+        const newBoard = board.getCopyBoard() // копируем текущую доску в новую
+        setBoard(newBoard) //обновляем состояние доски в App.tsx
     }
 
-    function highlightCells(){
-        board.highlightCells(selectedCell)
-        updateBoard()
+    function highlightCells(){//Подсвечиваем клетки (возможные для хода фигуры)
+        board.highlightCells(selectedCell) //метод подсвечивания клетки на доске
+        updateBoard()//обновляем доску
     }
 
-    useEffect(() =>{
-        highlightCells()
+    useEffect(() =>{//при изменениии выбранной клетки
+        highlightCells() //поподсвечиваем клетки (возможные для хода)
     },[selectedCell])
 
 
 
     return (
-        <div className='w-[512px] h-[512px] flex flex-wrap'>
-            {board.cells.map((row, index) =>
+        <div className='  w-[80vmin] h-[80vmin] flex flex-wrap'>
+            {board.cells.map((row, index) => //отрисовываем каждую клетку
                 <React.Fragment key={index}>
                     {
                         row.map(cell =>

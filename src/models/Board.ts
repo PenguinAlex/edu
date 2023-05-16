@@ -6,9 +6,12 @@ import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
 import {Bishop} from "./figures/Bishop";
 import {Queen} from "./figures/Queen";
+import {Figure} from "./figures/Figure";
 
 export class Board{
     cells: Cell[][] = []
+    lostBlackFigure: Figure[] = []
+    lostWhiteFigure: Figure[] = []
 
     public initCells() {
         for (let i = 0; i < 8; i++){
@@ -27,6 +30,8 @@ export class Board{
     public getCopyBoard():Board{
         const newBoard = new Board();
         newBoard.cells = this.cells;
+        newBoard.lostWhiteFigure = this.lostWhiteFigure
+        newBoard.lostBlackFigure = this.lostBlackFigure
         return newBoard;
     }
     public highlightCells(selectedCell: Cell | null){
@@ -40,6 +45,13 @@ export class Board{
     }
     public getCell(x:number, y:number){
         return this.cells[y][x]
+    }
+
+    addLostFigure(figure: Figure){
+        figure.color === Colors.BLACK
+            ? this.lostBlackFigure.push(figure)
+            : this.lostWhiteFigure.push(figure)
+
     }
 
     private addPawns(){

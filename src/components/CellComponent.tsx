@@ -11,14 +11,14 @@ const CellComponent:FC<CellProps> = ({cell,selected,click}) => {
     return (
         <div
             className={[
-                'w-16 h-16 relative justify-center items-center flex',
+                'w-[12.5%] h-[12.5%] relative justify-center items-center flex',
                 cell.color,
                 selected ? 'bg-yellow-400' : '',
                 cell.available && cell.figure ? 'bg-green-700' : ''
             ].join(' ')}
             onClick={() => click(cell)}
         >
-            {cell.available && !cell.figure && <div className='w-4 h-4 rounded-full bg-green-700'/>}
+            {cell.available && !cell.figure && <div className='w-1/4 h-1/4 rounded-full bg-green-700'/>}
             {cell.figure?.logo && <img className=' relative' src={cell.figure.logo} alt=''/>}
         </div>
     );

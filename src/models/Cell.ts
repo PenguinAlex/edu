@@ -31,7 +31,6 @@ export class Cell{
         const min = Math.min(this.x, target.x);
         const max = Math.max(this.x, target.x);
         for (let x = min + 1; x < max; x++) {
-            // console.log(`${y} ${this.board.getCell(this.x, y)} ${this.board.getCell(this.x, y).isEmpty()}`)
             if(!this.board.getCell(x, this.y).isEmpty()){
                 return false;
             }
@@ -46,7 +45,6 @@ export class Cell{
         const min = Math.min(this.y, target.y);
         const max = Math.max(this.y, target.y);
         for (let y = min + 1; y < max; y++) {
-            // console.log(`${y} ${this.board.getCell(this.x, y)} ${this.board.getCell(this.x, y).isEmpty()}`)
             if(!this.board.getCell(this.x, y).isEmpty()){
                 return false;
             }
@@ -82,6 +80,9 @@ export class Cell{
     moveFigure(target: Cell){
         if(this.figure && this.figure?.canMove(target)){
             this.figure?.moveFigure(target);
+            if(target.figure){
+                this.board.addLostFigure(target.figure)
+            }
             target.setFigure(this.figure);
             this.figure = null;
         }
